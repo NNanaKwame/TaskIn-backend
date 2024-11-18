@@ -1,17 +1,18 @@
+// routes/highlightRoutes.js
 const express = require('express');
 const router = express.Router();
-const highlightController = require('../controllers/highlightController');
+const upload = require('../config/multerConfig');
+const {
+    getAllHighlights,
+    getHighlightById,
+    addHighlight,
+    deleteHighlight
+} = require('../controllers/highlightController');
 
-// Route to get all highlights
-router.get('/', highlightController.getAllHighlights);
-
-// Route to get a specific highlight by ID
-router.get('/:id', highlightController.getHighlightById);
-
-// Route to add a new highlight
-router.post('/', highlightController.addHighlight);
-
-// Route to delete a specific highlight by ID
-router.delete('/:id', highlightController.deleteHighlight);
+// Routes
+router.get('/', getAllHighlights);
+router.get('/:id', getHighlightById);
+router.post('/', upload.single('image'), addHighlight);
+router.delete('/:id', deleteHighlight);
 
 module.exports = router;

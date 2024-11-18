@@ -1,6 +1,7 @@
 // index.js
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const initializeDatabase = require('./db/database');
 const taskRoutes = require('./routes/taskRoutes');
 const highlightRoutes = require('./routes/highlightRoutes');
@@ -12,6 +13,8 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors());
 
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 (async () => {
     const db = await initializeDatabase();
