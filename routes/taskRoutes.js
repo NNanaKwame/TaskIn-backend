@@ -1,6 +1,7 @@
 // routes/taskRoutes.js
 const express = require('express');
-const { getAllTasks, getTask, createTask, updateTask, deleteTask,completeTask } = require('../controllers/taskController');
+const { getAllTasks, getTask, createTask, updateTask, deleteTask, completeTask } = require('../controllers/tController');
+// const { getAllTasks, getTask, createTask, updateTask, deleteTask,completeTask } = require('../controllers/taskController');
 
 const router = express.Router();
 
