@@ -13,7 +13,10 @@ async function initializeDatabase() {
         waitForConnections: true,
         connectionLimit: process.env.DB_CONNECTION_LIMIT || 10, // Default to 10 if not specified
         queueLimit: process.env.DB_QUEUE_LIMIT || 0, // Default to 0 if not specified
-        connectTimeout: process.env.DB_CONNECT_TIMEOUT || 10000 // Default to 10 seconds if not specified
+        connectTimeout: process.env.DB_CONNECT_TIMEOUT || 10000, // Default to 10 seconds if not specified
+        ssl: {
+            ca: process.env.DB_SSL_CERT.replace(/\\n/g, '\n'), // Correctly format the multi-line certificate
+          },
     });
 
     const connection = await pool.getConnection();
