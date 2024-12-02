@@ -26,17 +26,23 @@ const getTask = async (req, res) => {
 const createTask = async (req, res) => {
     const db = req.app.get('db');
     const { title, description, due_date } = req.body;
+
     try {
+        // Convert ISO 8601 date string to MySQL DATETIME format
+        const formattedDueDate = new Date(due_date).toISOString().slice(0, 19).replace('T', ' ');
+
         const [result] = await db.query(
             'INSERT INTO tasks (title, description, due_date) VALUES (?, ?, ?)',
-            [title, description, due_date]
+            [title, description, formattedDueDate]
         );
+
         res.status(201).json({ id: result.insertId });
     } catch (error) {
         console.error('Error creating task:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 const updateTask = async (req, res) => {
     const db = req.app.get('db');
@@ -124,11 +130,11 @@ const deleteTask = async (req, res) => {
     }
 };
 
-module.exports = { 
-    getAllTasks, 
-    getTask, 
-    createTask, 
-    updateTask, 
-    deleteTask, 
-    completeTask 
+module.exports = {
+    getAllTasks,
+    getTask,
+    createTask,
+    updateTask,
+    deleteTask,
+    completeTask
 };
