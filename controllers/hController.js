@@ -20,7 +20,7 @@ const addHighlight = async (req, res) => {
 
         res.status(201).json({
             id: result.insertId,
-            image_path: imageUrl,
+            image_url: imageUrl,
             task_description: taskDescription,
         });
     } catch (error) {

@@ -1,15 +1,19 @@
 // controllers/taskController.js
 
 const getAllTasks = async (req, res) => {
-    const db = req.app.get('db'); // Use MySQL connection pool
+    const db = req.app.get('db'); 
+    const { page = 1, limit = 10 } = req.query; // Default to page 1, 10 tasks per page
+    const offset = (page - 1) * limit;
+
     try {
-        const [tasks] = await db.query('SELECT * FROM tasks');
+        const [tasks] = await db.query('SELECT * FROM tasks LIMIT ? OFFSET ?', [Number(limit), offset]);
         res.json(tasks);
     } catch (error) {
         console.error('Error fetching tasks:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 const getTask = async (req, res) => {
     const db = req.app.get('db');

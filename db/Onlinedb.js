@@ -17,8 +17,10 @@ async function initializeDatabase() {
         connectTimeout: process.env.DB_CONNECT_TIMEOUT || 10000, // Default to 10 seconds if not specified
         ssl: {
             ca: fs.readFileSync('ca.pem')
-          },
+        },
     });
+
+
 
     const connection = await pool.getConnection();
 
